@@ -3,12 +3,12 @@ import { NextPage } from 'next'
 import Layout from '../components/Layout'
 import SeriesGrid from '../components/SeriesGrid'
 import AudioClipsGrid from '../components/AudioClipsGrid'
-import { Channel as ChannelInterface } from '../interfaces/channel'
+import { Channel } from '../interfaces/channel'
 import { Serie } from '../interfaces/serie'
 import { Clip } from '../interfaces/clip'
 
 interface Props {
-  channel?: ChannelInterface,
+  channel?: Channel,
   audioClips?: Clip[],
   series?: Serie[]
 }
