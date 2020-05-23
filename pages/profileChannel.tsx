@@ -1,19 +1,24 @@
-import Link from 'next/link'
 import { NextPage } from 'next'
 import Layout from '../components/Layout'
 import SeriesGrid from '../components/SeriesGrid'
 import AudioClipsGrid from '../components/AudioClipsGrid'
+import Error from './_error'
 import { Channel } from '../interfaces/channel'
 import { Serie } from '../interfaces/serie'
 import { Clip } from '../interfaces/clip'
 
 interface Props {
-  channel?: Channel,
-  audioClips?: Clip[],
+  channel?: Channel
+  audioClips?: Clip[]
   series?: Serie[]
+  statusCode?: number
 }
 
-const ProfileChannel: NextPage<Props> = ({channel, audioClips, series}) => {
+const ProfileChannel: NextPage<Props> = ({channel, audioClips, series, statusCode}) => {
+
+  if (statusCode !== 200) {
+    return <Error statusCode={ statusCode } />
+  }
 
   return (
     <Layout title={`Podcasts - ${channel.title}`}>
@@ -42,24 +47,42 @@ const ProfileChannel: NextPage<Props> = ({channel, audioClips, series}) => {
 }
 
 ProfileChannel.getInitialProps = async ({query}) => {
-  const idChannel: string | string[] = query.id
 
-  const [reqChannel, reqAudios, reqSeries] = await Promise.all([
-    fetch(`https://api.audioboom.com/channels/${idChannel}`),
-    fetch(`https://api.audioboom.com/channels/${idChannel}/audio_clips`),
-    fetch(`https://api.audioboom.com/channels/${idChannel}/child_channels`)
-  ])
+  try {
+    const idChannel: string | string[] = query.id
 
-  const dataChanel = await reqChannel.json()
-  const channel = dataChanel.body.channel
+    const [reqChannel, reqAudios, reqSeries] = await Promise.all([
+      fetch(`https://api.audioboom.com/channels/${idChannel}`),
+      fetch(`https://api.audioboom.com/channels/${idChannel}/audio_clips`),
+      fetch(`https://api.audioboom.com/channels/${idChannel}/child_channels`)
+    ])
 
-  const dataAudio = await reqAudios.json()
-  const audioClips = dataAudio.body.audio_clips
+    if (reqChannel.status >= 400) {
+      return { channel: {}, audioClips: [], series: [], statusCode: reqChannel.status }
+    }
 
-  const dataSeries = await reqSeries.json()
-  const series = dataSeries.body.channels
+    if (reqAudios.status >= 400) {
+      return { channel: {}, audioClips: [], series: [], statusCode: reqAudios.status }
+    }
 
-  return { channel, audioClips, series }
+    if (reqSeries.status >= 400) {
+      return { channel: {}, audioClips: [], series: [], statusCode: reqSeries.status }
+    }
+
+    const dataChanel = await reqChannel.json()
+    const channel = dataChanel.body.channel
+
+    const dataAudio = await reqAudios.json()
+    const audioClips = dataAudio.body.audio_clips
+
+    const dataSeries = await reqSeries.json()
+    const series = dataSeries.body.channels
+
+    return { channel, audioClips, series, statusCode: 200 }
+  } catch(e) {
+    return { channel: {}, audioClips: [], series: [], statusCode: 503 }
+  }
+
 }
 
 export default ProfileChannel
