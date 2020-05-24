@@ -1,17 +1,27 @@
-import Link from 'next/link'
+import React from 'react'
+import Routes from '../routes'
 import { Clip } from '../interfaces/clip'
+import slug from '../utils/slug'
 
 type AudioClips = {
-  audioClips: Clip[]
+  audioClips: Clip[],
+  handleClick(event: React.MouseEvent<HTMLAnchorElement>, Clip): void
 }
 
-const AudioClipsGrid = ({ audioClips }: AudioClips) => {
+const AudioClipsGrid = ({ audioClips, handleClick }: AudioClips) => {
+  const { Link } = Routes
+
   return (
     <>
       <h2>Ultimos Podcasts</h2>
       { audioClips.map((clip) => (
-        <Link href={`/podcast?id=${clip.id}`} key={clip.id}>
-          <a className='podcast'>
+        <Link route='podcast' params={{
+          slugChannel: slug(clip.channel.title),
+          idChannel: clip.channel.id,
+          slug: slug(clip.title),
+          id: clip.id
+        }} key={clip.id}>
+          <a className='podcast' onClick={(e: React.MouseEvent<HTMLAnchorElement>) => handleClick(e, clip)}>
             <h3>{ clip.title }</h3>
             <div className='meta'>
               { Math.ceil(clip.duration / 60) } minutes

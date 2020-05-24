@@ -1,7 +1,8 @@
 import { NextPage } from 'next'
-import Link from 'next/link'
+import Routes from '../routes'
 import Error from './_error'
 import { Clip } from '../interfaces/clip'
+import slug from '../utils/slug'
 
 interface Props {
   clip: Clip,
@@ -9,6 +10,8 @@ interface Props {
 }
 
 const Podcast: NextPage<Props> = ({ clip, statusCode }) => {
+  const { Link } = Routes
+
   if (statusCode !== 200) {
     return <Error statusCode={ statusCode } />
   }
@@ -19,7 +22,10 @@ const Podcast: NextPage<Props> = ({ clip, statusCode }) => {
     <div className='modal'>
       <div className='clip'>
         <nav>
-          <Link href={`/channel?id=${clip.channel.id}`} key={clip.id}>
+          <Link route='profileChannel' params={{
+            slug: slug(clip.channel.title),
+            id: clip.channel.id
+          }}>
             <a className='close'>&lt; Volver</a>
           </Link>
         </nav>

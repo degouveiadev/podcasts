@@ -1,15 +1,21 @@
-import Link from 'next/link'
+import routes from '../routes'
 import { Channel } from '../interfaces/channel'
+import slug from '../utils/slug'
 
 type ChannelGridProps = {
   channels: Channel[]
 }
 
 const ChannelGrid = ({channels}: ChannelGridProps) => {
+  const { Link } = routes
+
   return (
     <div className="channels">
       {channels.map((channel: Channel, index: number) => (
-        <Link href={`/profileChannel?id=${channel.id}`} key={index}>
+        <Link route='profileChannel' params={{
+          slug: slug(channel.title),
+          id: channel.id
+        }} key={index}>
           <a className="channel">
             <div className="channel">
               <img src={channel.urls.logo_image.original} />

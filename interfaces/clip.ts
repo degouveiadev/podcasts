@@ -1,4 +1,4 @@
-interface Clip {
+export interface Clip {
   id?: number
   title?: string
   description?: string
