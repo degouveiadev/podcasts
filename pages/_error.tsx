@@ -1,25 +1,35 @@
-import Layout from "../components/Layout"
-import Link from 'next/link'
+import React from 'react';
+import { NextPage, NextPageContext } from 'next';
+import Layout from '../components/Layout';
+import Routes from '../routes';
 
-const Error = ({ statusCode }) => {
+type StatusCode = number | undefined;
+
+interface ErrorPageProp {
+  statusCode: StatusCode;
+}
+
+const Error: NextPage<ErrorPageProp> = ({ statusCode }: ErrorPageProp) => {
+  const { Link } = Routes;
+
   return (
-    <Layout title='Oh no :('>
+    <Layout title="Oh no :(">
       <p>
-        {statusCode === 404
-          ? (
-            <div className="message">
-              <h1>Esta página no existe :(</h1>
-              <p>
-                <Link href="/"><a>Volver al home</a></Link>
-              </p>
-            </div>
-          )
-          : (
-            <div className="message">
-              <h1>Hubo un problema :(</h1>
-              <p>Intenta nuevamente en unos segundos</p>
-            </div>
-          )}
+        {statusCode === 404 ? (
+          <div className="message">
+            <h1>Esta página no existe :(</h1>
+            <p>
+              <Link route="/">
+                <a>Volver al home</a>
+              </Link>
+            </p>
+          </div>
+        ) : (
+          <div className="message">
+            <h1>Hubo un problema :(</h1>
+            <p>Intenta nuevamente en unos segundos</p>
+          </div>
+        )}
       </p>
 
       <style>{`
@@ -35,12 +45,12 @@ const Error = ({ statusCode }) => {
         }
       `}</style>
     </Layout>
-  )
-}
+  );
+};
 
-Error.getInitialProps = ({ res, err }) => {
-  const statusCode = res ? res.statusCode : err ? err.statusCode : 404
-  return { statusCode }
-}
+Error.getInitialProps = ({ res, err }: NextPageContext) => {
+  const statusCode: StatusCode = res ? res.statusCode : err ? err.statusCode : 404;
+  return { statusCode };
+};
 
-export default Error
+export default Error;

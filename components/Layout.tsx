@@ -1,17 +1,15 @@
-import { NextPage } from 'next'
-import Link from 'next/link'
-import Head from 'next/head'
-import NProgress from 'nprogress'
-import Router from 'next/router'
-import { useLoading } from '../hooks/useLoading'
+import React from 'react';
+import Link from 'next/link';
+import Head from 'next/head';
+import { useLoading } from '../hooks/useLoading';
 
 interface Props {
-  title?: string,
-  children
+  title: string;
+  children: React.ReactChild | React.ReactChild[];
 }
 
-const Layout: NextPage<Props> = ({title, children}) => {
-  useLoading()
+const Layout: React.FC<Props> = ({ title, children }: Props) => {
+  useLoading();
 
   return (
     <div>
@@ -21,10 +19,8 @@ const Layout: NextPage<Props> = ({title, children}) => {
       </Head>
 
       <header>
-        <Link href='/'>
-          <a>
-            Podcasts
-          </a>
+        <Link href="/">
+          <a>Podcasts</a>
         </Link>
       </header>
 
@@ -72,11 +68,11 @@ const Layout: NextPage<Props> = ({title, children}) => {
           width: 100px;
           height: 100%;
           box-shadow: 0 0 10px #29d, 0 0 5px #29d;
-          opacity: 1.0;
+          opacity: 1;
 
           -webkit-transform: rotate(3deg) translate(0px, -4px);
-              -ms-transform: rotate(3deg) translate(0px, -4px);
-                  transform: rotate(3deg) translate(0px, -4px);
+          -ms-transform: rotate(3deg) translate(0px, -4px);
+          transform: rotate(3deg) translate(0px, -4px);
         }
 
         #nprogress .spinner {
@@ -98,7 +94,7 @@ const Layout: NextPage<Props> = ({title, children}) => {
           border-radius: 50%;
 
           -webkit-animation: nprogress-spinner 400ms linear infinite;
-                  animation: nprogress-spinner 400ms linear infinite;
+          animation: nprogress-spinner 400ms linear infinite;
         }
 
         .nprogress-custom-parent {
@@ -112,16 +108,24 @@ const Layout: NextPage<Props> = ({title, children}) => {
         }
 
         @-webkit-keyframes nprogress-spinner {
-          0%   { -webkit-transform: rotate(0deg); }
-          100% { -webkit-transform: rotate(360deg); }
+          0% {
+            -webkit-transform: rotate(0deg);
+          }
+          100% {
+            -webkit-transform: rotate(360deg);
+          }
         }
         @keyframes nprogress-spinner {
-          0%   { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
         }
       `}</style>
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

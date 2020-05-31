@@ -8,18 +8,28 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": false,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
+    "noEmit": true,
+    "incremental": false,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "declaration": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "experimentalDecorators": true,
+    "noFallthroughCasesInSwitch": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "strictNullChecks": false
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    ".next"
   ],
   "include": [
     "next-env.d.ts",

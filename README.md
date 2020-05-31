@@ -1,30 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
+# App de Podcasts del [Curso de Next.JS de Platzi](https://platzi.com/cursos/next-js/ 'Curso de Next.JS de Plazi') impartido por Roberto González
 
-## Getting Started
+App de Podcasts integrada con la API de AudioBoom para aprender Next.JS. Como reto personal se utilizó TypeScript para construir el proyecto.
 
-First, run the development server:
+### Vista de la app movil
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+![Captura de la app de podcasts mobile](./.readme-static/capture-app-podcasts-mobile.png)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Vista de la app web
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+![Captura de la app de podcasts web](./.readme-static/capture-app-podcasts-web.png)
 
-## Learn More
+[Ver el proyecto](https://podcast-nextjs.juanchordg03.now.sh/)
 
-To learn more about Next.js, take a look at the following resources:
+## ¿Cómo funciona?
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Con Node.JS:
 
-You can check out [the Next.js GitHub repository](https://github.com/zeit/next.js/) - your feedback and contributions are welcome!
+Requiere Node.JS 12
 
-## Deploy on Vercel
+- `npm install` para instalar las dependencias.
+- `npm run dev` para el entorno de desarrollo.
+- `npm run build && npm start` para el entorno de producción.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Con Docker:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- `docker-compose up -d` para crear y ejecutar el contenedor.
+
+## Licencia
+
+MIT

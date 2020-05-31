@@ -1,11 +1,15 @@
-const next = require('next')
-const routes = require('./routes')
-const app = next({dev: process.env.NODE_ENV !== 'production'})
-const handler = routes.getRequestHandler(app)
-const port = process.env.PORT || 3000
+const next = require('next');
+const routes = require('./routes');
+const app = next({ dev: process.env.NODE_ENV !== 'production' });
+const handler = routes.getRequestHandler(app);
+const port = process.env.PORT || 3000;
 
-// Without express
-const {createServer} = require('http')
+const { resolve } = require('path');
+const { config } = require('dotenv');
+
+config({ path: resolve(__dirname, '../.env') });
+
+const { createServer } = require('http');
 app.prepare().then(() => {
-  createServer(handler).listen(port)
-})
+  createServer(handler).listen(port);
+});

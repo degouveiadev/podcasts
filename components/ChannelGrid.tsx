@@ -1,22 +1,26 @@
-import routes from '../routes'
-import { Channel } from '../interfaces/channel'
-import slug from '../utils/slug'
-
-type ChannelGridProps = {
-  channels: Channel[]
+import React from 'react';
+import Routes from '../routes';
+import { Channel } from '../interfaces/channel';
+import slug from '../utils/slug';
+interface ChannelGridProps {
+  channels?: Channel[];
 }
 
-const ChannelGrid = ({channels}: ChannelGridProps) => {
-  const { Link } = routes
+const ChannelGrid: React.FC<ChannelGridProps> = ({ channels = [] }: ChannelGridProps) => {
+  const { Link } = Routes;
 
   return (
     <div className="channels">
       {channels.map((channel: Channel, index: number) => (
-        <Link route='profileChannel' params={{
-          slug: slug(channel.title),
-          id: channel.id
-        }} key={index}>
-          <a className="channel">
+        <Link
+          route="profileChannel"
+          params={{
+            slug: slug(channel.title),
+            id: channel.id,
+          }}
+          key={index}
+        >
+          <a className="channel" key={index}>
             <div className="channel">
               <img src={channel.urls.logo_image.original} />
               <h2>{channel.title}</h2>
@@ -56,7 +60,7 @@ const ChannelGrid = ({channels}: ChannelGridProps) => {
         }
       `}</style>
     </div>
-  )
-}
+  );
+};
 
-export default ChannelGrid
+export default ChannelGrid;

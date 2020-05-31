@@ -1,5 +1,5 @@
-import slugify from 'slugify'
+import slugify from 'slugify';
 
-export default (name) => {
-  return slugify(name, {lower: true}).replace(/[^\w\-]+/g, '')
-}
+export default (name: string): string => {
+  return slugify(name, { lower: true }).replace(/[^\w\-]+/g, '');
+};
